@@ -1,0 +1,32 @@
+{
+  "name": "melon",
+  "displayName": "melon",
+  "description": "Syntax highlighting for Melon",
+  "version": "1.0.0",
+  "publisher": "Zmg",
+  "repository": "https://github.com/mg-zsyo/melon-vscode.git",
+  "icon": "images/melon.png",
+  "engines": {
+    "vscode": "^1.54.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "melon",
+        "aliases": [ "melon" ],
+        "extensions": [ "melon" ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "melon",
+        "scopeName": "source.melon",
+        "path": "./syntaxes/melon.tmLanguage.json"
+      }
+    ]
+  }
+}

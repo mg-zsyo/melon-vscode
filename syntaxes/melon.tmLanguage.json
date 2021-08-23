@@ -1,0 +1,119 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "melon",
+	"patterns": [
+		{
+			"include": "#block"
+		}
+    ],
+    "repository": {
+        "comment": {
+			"patterns": [
+                {
+                    "name": "comment.block.melon",
+                    "begin": "(\\[)%",
+                    "end": "(\\])",
+                    "patterns": [
+                        {
+                            "name": "comment.melon",
+                            "match": "\\\\[\\\\`*_{}\\[\\]()#+-\\.!]"
+                        },
+                        {
+                            "name": "comment.block.melon",
+                            "begin": "\\[",
+                            "end": "\\]",
+                            "patterns": [
+                                {
+                                    "include": "#comment"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+		"block": {
+			"patterns": [
+                {
+                    "name": "punctuation.definition.tag.melon",
+                    "match": "(\\[)([-/; ])(\\])"
+                },
+                {
+                    "name": "comment.block.melon",
+                    "begin": "(\\[)%",
+                    "end": "(\\])",
+                    "patterns": [
+                        {
+                            "include": "#plaintext"
+                        }
+                    ]
+                },
+                {
+                    "name": "comment.block.melon",
+                    "begin": "(\\[)%",
+                    "end": "(\\])",
+                    "patterns": [
+                        {
+                            "name": "comment.melon",
+                            "match": "\\\\[\\\\`*_{}\\[\\]()#+-\\.!]"
+                        },
+                        {
+                            "name": "comment.block.melon",
+                            "begin": "\\[",
+                            "end": "\\]",
+                            "patterns": [
+                                {
+                                    "include": "#comment"
+                                }
+                            ]
+                        }
+                    ]
+                },
+				{
+                    "begin": "(\\[)(.+?)(;)",
+                    "beginCaptures": {
+                        "1": { "name": "punctuation.definition.tag.begin.melon" },
+                        "2": { "name": "entity.name.tag.melon" },
+                        "3": { "name": "punctuation.definition.tag.melon" }
+                    },
+                    "end": "(\\])",
+                    "endCaptures": {
+                        "1": { "name": "punctuation.definition.tag.end.melon" }
+                    },
+                    "name": "meta.paragraph.melon",
+                    "patterns": [
+                        { 
+                            "include": "$self" 
+                        }
+                    ]
+				}
+			]
+		},
+        "plaintext": {
+            "patterns": [
+                {
+                    "name": "meta.paragraph.melon",
+                    "begin": "\\[",
+                    "end": "\\]",
+                    "patterns": [
+                        {
+                            "include": "#escape"
+                        },
+                        {
+                            "include": "#plaintext"
+                        }
+                    ]
+                }
+            ]
+        },
+        "escape": {
+            "patterns": [
+                {
+					"name": "constant.character.escape.melon",
+					"match": "\\\\[\\\\`*_{}\\[\\]()#+-\\.!]"
+				}
+            ]
+        }
+    },
+    "scopeName": "source.melon"
+}
