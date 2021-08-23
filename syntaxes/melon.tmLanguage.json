@@ -84,6 +84,12 @@
                     "patterns": [
                         { 
                             "include": "$self" 
+                        },
+                        {
+                            "include": "#plaintext"
+                        },
+                        {
+                            "include": "#escape"
                         }
                     ]
 				}
