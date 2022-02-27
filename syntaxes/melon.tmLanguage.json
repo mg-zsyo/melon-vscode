@@ -2,75 +2,45 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "melon",
 	"patterns": [
+        {
+			"include": "#escape"
+		},
 		{
 			"include": "#block"
 		}
     ],
     "repository": {
-        "comment": {
-			"patterns": [
+        "escape": {
+            "patterns": [
                 {
-                    "name": "comment.block.melon",
-                    "begin": "(\\[)%",
-                    "end": "(\\])",
-                    "patterns": [
-                        {
-                            "name": "comment.melon",
-                            "match": "\\\\[\\\\`*_{}\\[\\]()#+-\\.!]"
-                        },
-                        {
-                            "name": "comment.block.melon",
-                            "begin": "\\[",
-                            "end": "\\]",
-                            "patterns": [
-                                {
-                                    "include": "#comment"
-                                }
-                            ]
-                        }
-                    ]
-                }
+					"name": "constant.character.escape.melon",
+					"match": "\\\\[\\\\`*_{}\\[\\]()#+\\-\\.!]"
+				}
             ]
         },
 		"block": {
 			"patterns": [
                 {
                     "name": "punctuation.definition.tag.melon",
-                    "match": "(\\[)([-/; ])(\\])"
+                    "match": "\\[[-/; ]\\]"
                 },
                 {
-                    "name": "comment.block.melon",
                     "begin": "(\\[)%",
+                    "beginCaptures": {
+                        "1": { "name": "comment.block.melon" }
+                    },
                     "end": "(\\])",
+                    "endCaptures": {
+                        "1": { "name": "comment.block.melon" }
+                    },
+                    "name":  "comment.block.melon",
                     "patterns": [
-                        {
-                            "include": "#plaintext"
-                        }
+                        { "include": "#escape" },
+                        { "include": "#plaintext-comment" }
                     ]
-                },
+				},
                 {
-                    "name": "comment.block.melon",
-                    "begin": "(\\[)%",
-                    "end": "(\\])",
-                    "patterns": [
-                        {
-                            "name": "comment.melon",
-                            "match": "\\\\[\\\\`*_{}\\[\\]()#+-\\.!]"
-                        },
-                        {
-                            "name": "comment.block.melon",
-                            "begin": "\\[",
-                            "end": "\\]",
-                            "patterns": [
-                                {
-                                    "include": "#comment"
-                                }
-                            ]
-                        }
-                    ]
-                },
-				{
-                    "begin": "(\\[)(.+?)(;)",
+                    "begin": "(\\[)(c.*?)(;)",
                     "beginCaptures": {
                         "1": { "name": "punctuation.definition.tag.begin.melon" },
                         "2": { "name": "entity.name.tag.melon" },
@@ -82,15 +52,31 @@
                     },
                     "name": "meta.paragraph.melon",
                     "patterns": [
-                        { 
-                            "include": "$self" 
+                        { "include": "#plaintext-code" },
+                        { "include": "#strings" }
+                    ]
+				},
+				{
+                    "begin": "(\\[)(.+?)(;)",
+                    "beginCaptures": {
+                        "1": { "name": "punctuation.definition.tag.begin.melon" },
+                        "2": { 
+                            "name": "entity.name.tag.melon" ,
+                            "patterns": [
+                                { "include": "#strings" }
+                            ]
                         },
-                        {
-                            "include": "#plaintext"
-                        },
-                        {
-                            "include": "#escape"
-                        }
+                        "3": { "name": "punctuation.definition.tag.melon" }
+                    },
+                    "end": "(\\])",
+                    "endCaptures": {
+                        "1": { "name": "punctuation.definition.tag.end.melon" }
+                    },
+                    "name": "meta.paragraph.melon",
+                    "patterns": [
+                        { "include": "$self" },
+                        { "include": "#plaintext" },
+                        { "include": "#escape" }
                     ]
 				}
 			]
@@ -102,22 +88,47 @@
                     "begin": "\\[",
                     "end": "\\]",
                     "patterns": [
-                        {
-                            "include": "#escape"
-                        },
-                        {
-                            "include": "#plaintext"
-                        }
+                        { "include": "#escape" },
+                        { "include": "#plaintext" }
                     ]
                 }
             ]
         },
-        "escape": {
+        "plaintext-comment": {
             "patterns": [
                 {
+                    "name": "comment.block.melon",
+                    "begin": "\\[",
+                    "end": "\\]",
+                    "patterns": [
+                        { "include": "#escape" },
+                        { "include": "#plaintext-comment" }
+                    ]
+                }
+            ]
+        },
+        "strings": {
+			"name": "string.quoted.double.melon",
+			"begin": "[\"']",
+			"end": "[\"']",
+			"patterns": [
+				{
 					"name": "constant.character.escape.melon",
-					"match": "\\\\[\\\\`*_{}\\[\\]()#+-\\.!]"
+					"match": "\\\\."
 				}
+			]
+		},
+        "plaintext-code": {
+            "patterns": [
+                {
+                    "name": "markup.raw.melon",
+                    "begin": "\\[",
+                    "end": "\\]",
+                    "patterns": [
+                        { "include": "#plaintext-code" },
+                        { "include": "#strings" }
+                    ]
+                }
             ]
         }
     },
