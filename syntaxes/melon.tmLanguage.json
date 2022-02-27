@@ -1,25 +1,25 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "melon",
-	"patterns": [
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "melon",
+    "patterns": [
         {
-			"include": "#escape"
-		},
-		{
-			"include": "#block"
-		}
+            "include": "#escape"
+        },
+        {
+            "include": "#block"
+        }
     ],
     "repository": {
         "escape": {
             "patterns": [
                 {
-					"name": "constant.character.escape.melon",
-					"match": "\\\\[\\\\`*_{}\\[\\]()#+\\-\\.!]"
-				}
+                    "name": "constant.character.escape.melon",
+                    "match": "\\\\[\\\\`*_{}\\[\\]()#+\\-\\.!]"
+                }
             ]
         },
-		"block": {
-			"patterns": [
+        "block": {
+            "patterns": [
                 {
                     "name": "punctuation.definition.tag.melon",
                     "match": "\\[[-/; ]\\]"
@@ -38,7 +38,7 @@
                         { "include": "#escape" },
                         { "include": "#plaintext-comment" }
                     ]
-				},
+                },
                 {
                     "begin": "(\\[)(c.*?)(;)",
                     "beginCaptures": {
@@ -55,8 +55,8 @@
                         { "include": "#plaintext-code" },
                         { "include": "#strings" }
                     ]
-				},
-				{
+                },
+                {
                     "begin": "(\\[)(.+?)(;)",
                     "beginCaptures": {
                         "1": { "name": "punctuation.definition.tag.begin.melon" },
@@ -78,9 +78,9 @@
                         { "include": "#plaintext" },
                         { "include": "#escape" }
                     ]
-				}
-			]
-		},
+                }
+            ]
+        },
         "plaintext": {
             "patterns": [
                 {
@@ -108,16 +108,16 @@
             ]
         },
         "strings": {
-			"name": "string.quoted.double.melon",
-			"begin": "[\"']",
-			"end": "[\"']",
-			"patterns": [
-				{
-					"name": "constant.character.escape.melon",
-					"match": "\\\\."
-				}
-			]
-		},
+            "name": "string.quoted.double.melon",
+            "begin": "[\"']",
+            "end": "[\"']",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.melon",
+                    "match": "\\\\."
+                }
+            ]
+        },
         "plaintext-code": {
             "patterns": [
                 {
